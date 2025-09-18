@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все отзывы | МустафоШох</title>
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-dark: #120A27; /* Темно-фиолетовый фон */
+            --card-bg-dark: rgba(255, 255, 255, 0.05); /* Темный полупрозрачный фон для карточек */
+            --text-dark: #e0e0e0;
+            --accent-color: #6a44aa; /* Светло-фиолетовый акцент */
+            --accent-color-hover: #503180; /* Темный фиолетовый на hover */
+            --transition-speed: 0.5s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+            transition: background var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
+        }
+        
+        body.light-mode {
+            background: #f0f4f8;
+            color: #121212;
+            --accent-color: #673ab7;
+            --accent-color-hover: #512da8;
+            --card-bg-dark: rgba(0, 0, 0, 0.05);
+        }
+
+        .card-glow-hover {
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .card-glow-hover:hover {
+            box-shadow: 0 0 15px var(--accent-color), 0 0 25px var(--accent-color);
+        }
+    </style>
+</head>
+<body class="text-white">
+
+<!-- Header with back button -->
+<header class="py-6 px-4 sticky top-0 bg-[var(--bg-dark)] backdrop-blur-md z-50">
+    <div class="container mx-auto max-w-6xl flex justify-between items-center">
+        <a href="index.html" class="flex items-center px-4 py-2 rounded-full text-white font-bold tracking-wide transition-all transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Назад
+        </a>
+    </div>
+</header>
+
+<!-- Секция со всеми отзывами -->
+<main class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-4xl text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-12">Все отзывы клиентов</h1>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Отзывы (более 20) -->
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"МустафоШох создал для нас сайт, который полностью превзошел наши ожидания. Все было сделано вовремя и в рамках бюджета."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=И" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Иван Петров</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Сотрудничество с МустафоШохом было очень приятным. Он всегда на связи, готов помочь и дает дельные советы. Результатом очень довольны!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=М" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Мария Смирнова</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Отличный специалист! Бота сделали быстро и с учетом всех наших пожеланий. Работает безупречно."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Д" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Дмитрий Кузнецов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Продвижение в Instagram с МустафоШохом — это настоящий успех. Мы получили много новых подписчиков и клиентов. Спасибо!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=О" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Ольга Ковалева</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Очень качественная и быстрая работа. Сайт работает без нареканий, все пожелания были учтены."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=А" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Александр Волков</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Прекрасный специалист! Всегда на связи и готов помочь. Очень рекомендую."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Т" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Татьяна Елисеева</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Обратился к МустафоШоху с небольшой задачей, но получил гораздо больше, чем ожидал. Все сделано на высшем уровне!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=И" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Игорь Зайцев</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Бот, созданный МустафоШохом, сэкономил нам много времени и ресурсов. Благодарим за профессионализм."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=А" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Алина Соколова</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Отличная работа по продвижению в Instagram. Результат заметен сразу. Очень довольны."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=В" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Виктор Орлов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Заказывал сайт-визитку. Все было сделано очень быстро и качественно. Рекомендую!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=П" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Павел Фролов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Очень благодарен МустафоШоху за проделанную работу. Он настоящий профессионал."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Ю" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Юлия Иванова</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Отличный сервис и качество. Результат превзошел все ожидания. Спасибо!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Е" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Елена Кошкина</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Сайт получился очень красивым и удобным. Все было сделано в срок."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Н" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Николай Сергеев</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Я очень довольна работой МустафоШоха. Он профессионал своего дела. Рекомендую!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=С" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Светлана Андреева</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Бот, созданный МустафоШохом, очень помог нашему бизнесу. Все работает идеально."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=В" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Василий Павлов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Обратился с задачей по продвижению в Instagram и остался очень доволен результатом."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=М" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Михаил Котов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Заказывал лендинг. Очень доволен результатом, все было сделано на высшем уровне."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Г" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Георгий Лебедев</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Отличный специалист. Сделал все быстро и качественно. Спасибо!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Д" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Диана Козлова</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Мы получили именно то, что хотели. Сайт выглядит превосходно!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=И" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Иван Иванов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Бот работает без сбоев. Очень доволен результатом."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=Л" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Людмила Сомова</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"МустафоШох - настоящий профессионал. Его подход к работе очень впечатляет."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://placehold.co/50x50/333/fff/svg?text=А" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Александр Павлов</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

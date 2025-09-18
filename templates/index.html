@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио Веб-разработчика | МустафоШох</title>
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for the aGraph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #120A27; /* Темно-фиолетовый фон */
+            --card-bg-dark: rgba(255, 255, 255, 0.05); /* Темный полупрозрачный фон для карточек */
+            --text-dark: #e0e0e0;
+            --accent-color: #6a44aa; /* Светло-фиолетовый акцент */
+            --accent-color-hover: #503180; /* Темный фиолетовый на hover */
+            --transition-speed: 0.5s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+            transition: background var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
+        }
+        
+        body.light-mode {
+            background: #f0f4f8;
+            color: #121212;
+            --accent-color: #673ab7;
+            --accent-color-hover: #512da8;
+            --card-bg-dark: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hero Section Video */
+        #hero-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.5) blur(1px);
+        }
+
+        /* Gradient for hover effects */
+        .card-glow-hover {
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .card-glow-hover:hover {
+            box-shadow: 0 0 15px var(--accent-color), 0 0 25px var(--accent-color);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color-hover);
+        }
+
+        /* Custom animations for fade-in/slide-in effect */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.6, 0.05, 0.28, 0.91), transform 1s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+        }
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the counter numbers */
+        .counter-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-color);
+        }
+        
+        /* Chart container styling for the large graph */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="text-white">
+
+<!-- Fixed Header with Logo and Theme Toggle -->
+<nav class="fixed top-0 left-0 w-full p-4 flex justify-between items-center z-50 bg-black/50 backdrop-blur-md">
+    <!-- Logo Placeholder -->
+    <a href="#" class="flex items-center space-x-2">
+        <img src="Gemini_Generated_Image_e95603e95603e956.png" alt="Логотип" class="h-10 w-10 rounded-full border border-gray-700 transition-transform transform hover:scale-110">
+        <span class="text-xl font-bold">МустафоШох</span>
+    </a>
+    
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="p-2 rounded-full transition-colors duration-300 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white">
+        <!-- Moon Icon (Dark Mode) -->
+        <svg xmlns="http://www.w3.org/2000/svg" id="moon-icon" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" style="display: block;">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+        </svg>
+        <!-- Sun Icon (Light Mode) -->
+        <svg xmlns="http://www.w3.org/2000/svg" id="sun-icon" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
+            <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zM12 6.5a.5.5 0 01.5.5v2.5a.5.5 0 01-1 0V7a.5.5 0 01.5-.5zM12 14.5a.5.5 0 01.5.5v2.5a.5.5 0 01-1 0v-2.5a.5.5 0 01.5-.5zM17.5 12a.5.5 0 01.5-.5h2.5a.5.5 0 010 1h-2.5a.5.5 0 01-.5-.5zM3.5 12a.5.5 0 01.5-.5h2.5a.5.5 0 010 1H4a.5.5 0 01-.5-.5zM16.48 7.52a.5.5 0 01.35.15l1.77 1.77a.5.5 0 01-.71.71l-1.77-1.77a.5.5 0 01.35-.86zM6.52 16.48a.5.5 0 01.35-.15l1.77-1.77a.5.5 0 01.71.71l-1.77 1.77a.5.5 0 01-.35-.86zM16.48 16.48a.5.5 0 01-.35.15l-1.77 1.77a.5.5 0 01-.71-.71l1.77-1.77a.5.5 0 01.35-.86zM6.52 7.52a.5.5 0 01.35.15l1.77 1.77a.5.5 0 01.71-.71L8.58 7.88a.5.5 0 01-.35-.15z"/>
+        </svg>
+    </button>
+</nav>
+
+<!-- Шапка (Hero Section) with Video Background -->
+<header class="h-screen flex items-center justify-center text-center p-4 relative overflow-hidden">
+    <!-- Video Background - Пожалуйста, замените URL-адрес видео на ваш. -->
+    <video id="hero-video" autoplay muted loop playsinline>
+        <source src="4733-179738669.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="flex items-center justify-between w-full max-w-6xl mx-auto p-6 rounded-2xl space-y-6 fade-in">
+        <div class="space-y-6 text-left">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
+                <span class="text-white">МустафоШох</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-400 font-medium max-w-2xl">
+                Создаю современные веб-сайты, Telegram-ботов и эффективное продвижение в Instagram.
+            </p>
+            <a href="#contact" class="inline-block mt-8 px-8 py-3 rounded-full text-white font-bold tracking-wide transition-all transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+                Связаться со мной
+            </a>
+        </div>
+        <div class="profile-image-container">
+            <img src="photo_2024-09-30_18-34-58.jpg" alt="Профиль" class="w-[225px] h-[225px] rounded-full border-2 border-white object-cover shadow-lg">
+        </div>
+    </div>
+</header>
+
+<!-- Блок "Услуги" -->
+<section id="services" class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-6xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 fade-in">Мои услуги</h2>
+        <div class="space-y-12">
+            <!-- Разработка веб-сайтов -->
+            <div class="flex flex-col md:flex-row items-center gap-8 p-6 rounded-2xl bg-[var(--card-bg-dark)] backdrop-blur-md fade-in">
+                <div class="md:w-1/2 w-full flex-shrink-0">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBQu7n4HgoaH06SoSmNrhjbAZcT55lyGK9eg&s" alt="Разработка веб-сайтов" class="w-full h-auto rounded-lg shadow-xl">
+                </div>
+                <div class="md:w-1/2 w-full text-left">
+                    <h3 class="text-2xl font-bold mb-2">Разработка веб-сайтов</h3>
+                    <p class="text-gray-300 leading-relaxed mb-2">
+                        Я предлагаю полный спектр услуг по созданию веб-сайтов, начиная от небольших сайтов-визиток и лендингов,
+                        до сложных и многофункциональных интернет-магазинов и корпоративных порталов. Каждый сайт,
+                        который я создаю, отличается адаптивным дизайном, что гарантирует идеальное отображение на любом устройстве
+                        — от настольного компьютера до смартфона. Моя цель — не просто сделать сайт, а создать эффективный
+                        инструмент для вашего бизнеса, который будет быстро работать и привлекать клиентов.
+                    </p>
+                    <p class="text-lg font-bold text-white mt-4">Цена: от 30 до 1500 Сомон</p>
+                    <a href="#contact" class="inline-block mt-4 px-6 py-2 rounded-full text-white font-bold tracking-wide transition-all transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+                        Заказать
+                    </a>
+                </div>
+            </div>
+            <!-- Создание Telegram-ботов -->
+            <div class="flex flex-col md:flex-row items-center gap-8 p-6 rounded-2xl bg-[var(--card-bg-dark)] backdrop-blur-md fade-in">
+                <div class="md:w-1/2 w-full text-left order-2 md:order-1">
+                    <h3 class="text-2xl font-bold mb-2">Создание Telegram-ботов</h3>
+                    <p class="text-gray-300 leading-relaxed mb-2">
+                        Telegram-боты — это мощный инструмент для автоматизации и оптимизации многих задач.
+                        Я разрабатываю ботов для различных целей: чат-боты для поддержки клиентов, боты для рассылок и уведомлений,
+                        боты для сбора заказов и даже боты с игровым функционалом. Они могут быть интегрированы с вашими
+                        существующими системами и базами данных, чтобы обеспечить бесперебойную работу и повысить эффективность
+                        вашего бизнеса.
+                    </p>
+                    <p class="text-lg font-bold text-white mt-4">Цена: от 5 до 1000 Сомон</p>
+                    <a href="#contact" class="inline-block mt-4 px-6 py-2 rounded-full text-white font-bold tracking-wide transition-all transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+                        Заказать
+                    </a>
+                </div>
+                <div class="md:w-1/2 w-full flex-shrink-0 order-1 md:order-2">
+                    <img src="https://neiros.ru/images/eac4255f7c37d848ac5cda7737116ab3.png" alt="Создание Telegram-ботов" class="w-full h-auto rounded-lg shadow-xl">
+                </div>
+            </div>
+            <!-- Аватарки Free Fire -->
+            <div class="flex flex-col md:flex-row items-center gap-8 p-6 rounded-2xl bg-[var(--card-bg-dark)] backdrop-blur-md fade-in">
+                <div class="md:w-1/2 w-full flex-shrink-0">
+                    <img src="ChatGPT Image 18 сент. 2025 г., 16_33_12.png" alt="Аватарки Free Fire" class="w-full h-auto rounded-lg shadow-xl">
+                </div>
+                <div class="md:w-1/2 w-full text-left">
+                    <h3 class="text-2xl font-bold mb-2">Аватарки Free Fire</h3>
+                    <p class="text-gray-300 leading-relaxed mb-2">
+                        Создаю профессиональные аватарки для игроков Free Fire! Уникальный дизайн с твоим игровым ником, любимыми персонажами, крутыми скинами и легендарным оружием. Делаю стильные обложки для YouTube каналов, красивые аватары для соцсетей и эпические баннеры для стримов. Использую только высококачественную графику, добавляю эффекты огня, дыма и взрывов. Каждая работа уникальна и отражает твой игровой стиль. Быстрое выполнение за 1-2 дня, все популярные форматы файлов, неограниченные правки до полного результата. Покажи всем в лобби, кто здесь настоящий про-игрок! Работаю с любыми персонажами: DJ Alok, Chrono, Kelly, Hayato и другими. Добавлю твой ранг, статистику, любимое оружие и крутые эффекты.
+                    </p>
+                    <p class="text-lg font-bold text-white mt-4">Цена: от 10 до 60 Сомон</p>
+                    <a href="#contact" class="inline-block mt-4 px-6 py-2 rounded-full text-white font-bold tracking-wide transition-all transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+                        Заказать
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок статистики с анимированными счетчиками -->
+<section id="stats" class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-6xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 fade-in">Статистика</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 fade-in">
+            <!-- Счетчик завершенных проектов -->
+            <div class="p-8 rounded-2xl bg-[var(--card-bg-dark)] backdrop-blur-md flex flex-col items-center justify-center card-glow-hover">
+                <span class="counter-number text-white" data-target="1326">0</span>
+                <p class="text-gray-400 text-lg font-medium mt-2">Завершенных проектов</p>
+            </div>
+            <!-- Счетчик довольных клиентов -->
+            <div class="p-8 rounded-2xl bg-[var(--card-bg-dark)] backdrop-blur-md flex flex-col items-center justify-center card-glow-hover">
+                <span class="counter-number text-white" data-target="893">0</span>
+                <p class="text-gray-400 text-lg font-medium mt-2">Довольных клиентов</p>
+            </div>
+            <!-- Счетчик лет опыта -->
+            <div class="p-8 rounded-2xl bg-[var(--card-bg-dark)] backdrop-blur-md flex flex-col items-center justify-center card-glow-hover">
+                <span class="counter-number text-white" data-target="4">0</span>
+                <p class="text-gray-400 text-lg font-medium mt-2">Лет опыта</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Интерактивный график роста -->
+<section id="growth-chart" class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-6xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 fade-in">Рост проектов и клиентов</h2>
+        <div class="rounded-2xl p-6 bg-[var(--card-bg-dark)] backdrop-blur-md fade-in chart-container">
+            <canvas id="growthChart"></canvas>
+        </div>
+    </div>
+</section>
+
+<!-- Портфолио -->
+<section id="portfolio" class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-6xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 fade-in">Мои работы</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8 fade-in">
+            <!-- Пример проекта 1 -->
+            <div class="rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 card-glow-hover">
+                <img src="https://cdn.freelance.ru/download/3573245/file.jpg" alt="Проект 1" class="w-full h-48 object-cover">
+                <div class="p-6 bg-[var(--card-bg-dark)] backdrop-blur-md">
+                    <h3 class="text-lg font-bold text-gray-100">Сайт-визитка для фотографа</h3>
+                    <p class="text-gray-400 mt-2 text-sm">Лаконичный и стильный сайт с галереей работ.</p>
+                </div>
+            </div>
+            <!-- Пример проекта 2 -->
+            <div class="rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 card-glow-hover">
+                <img src="https://fmf72.ru/upload/iblock/15d/q8j3yo353di4maf2ciebqfuv3v6tk3no.png" alt="Проект 2" class="w-full h-48 object-cover">
+                <div class="p-6 bg-[var(--card-bg-dark)] backdrop-blur-md">
+                    <h3 class="text-lg font-bold text-gray-100">Бот-помощник для бизнеса</h3>
+                    <p class="text-gray-400 mt-2 text-sm">Бот для автоматизации ответов на популярные вопросы.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Отзывы на главной странице (только 3) -->
+<section id="testimonials" class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-4xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 fade-in">Отзывы клиентов</h2>
+        <div class="grid md:grid-cols-3 gap-8 mb-8 fade-in">
+            <!-- Отзыв 1 -->
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Работа МустафоШоха превзошла все ожидания. Сайт получился не только красивым, но и очень удобным. Рекомендую!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://s0.rbk.ru/v6_top_pics/media/img/0/99/346914168454990.jpeg" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Анна К.</p>
+                        <p class="text-xs text-gray-400">Владелец фотостудии</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Отзыв 2 -->
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Бот, разработанный МустафоШохом, помог нам автоматизировать процессы и сэкономить кучу времени. Отличный специалист!"</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://heartteamspb.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpyagai.0f334c49.jpg&w=1920&q=75" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Виктор П.</p>
+                        <p class="text-xs text-gray-400">Предприниматель</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Отзыв 3 -->
+            <div class="rounded-2xl p-6 space-y-4 bg-[var(--card-bg-dark)] card-glow-hover">
+                <p class="text-gray-300 italic">"Очень доволен результатом работы! Сайт был сделан быстро, качественно и полностью соответствует моим требованиям."</p>
+                <div class="flex items-center justify-center">
+                    <img src="https://ast.ru/upload/authors/276/Nikolaevich_300.jpg" alt="Фото клиента" class="w-12 h-12 rounded-full mr-4 border border-gray-700">
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-gray-100">Сергей Н.</p>
+                        <p class="text-xs text-gray-400">Маркетолог</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="main.html" class="inline-block mt-4 px-8 py-3 rounded-full text-white font-bold tracking-wide transition-all transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+            Читать все отзывы
+        </a>
+    </div>
+</section>
+
+<!-- Контакты -->
+<section id="contact" class="py-20 px-4 relative z-10">
+    <div class="container mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-8 fade-in">Свяжитесь со мной</h2>
+        <p class="text-gray-400 text-lg mb-8 fade-in">Я всегда открыт для новых проектов и интересных идей. Не стесняйтесь, напишите мне!</p>
+        <div class="flex flex-col md:flex-row justify-center gap-4 fade-in">
+            <a href="https://t.me/MustafoShoh2008" target="_blank" class="flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-transform transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.328 15.328a.8.8 0 01-.58-.293l-2.486-2.316a.8.8 0 01.11-.945l1.096-.92a.8.8 0 011.114.11L14.545 14a.8.8 0 01-.11.945l-1.096.92a.8.8 0 01-1.114-.11L8.747 9.87a.8.8 0 01.11-.945l1.096-.92a.8.8 0 011.114.11L14.545 14a.8.8 0 01-.11.945l-1.096.92a.8.8 0 01-1.114-.11z" /></svg>
+                Telegram
+            </a>
+            <a href="https://www.instagram.com/ff__premium" target="_blank" class="flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-transform transform hover:scale-105 shadow-lg bg-gray-800 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.18 10a3.18 3.18 0 11-6.36 0 3.18 3.18 0 016.36 0zm-3.18-1.42a1.42 1.42 0 100 2.84 1.42 1.42 0 000-2.84zm6.06-1.55a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" /></svg>
+                Instagram
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Футер -->
+<footer class="py-6 text-center text-gray-500 text-sm">
+    <div class="container mx-auto">
+        <p>&copy; 2025 МустафоШох. Все права защищены.</p>
+        <p>Создано с ❤️ и кодом.</p>
+    </div>
+</footer>
+
+<!-- JavaScript для анимаций и переключения темы -->
+<script>
+    // Intersection Observer для анимаций появления
+    const sections = document.querySelectorAll('.fade-in');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+
+    // Check saved theme preference on load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light-mode') {
+        body.classList.add('light-mode');
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+
+        if (body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light-mode');
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        } else {
+            localStorage.setItem('theme', 'dark-mode');
+            moonIcon.style.display = 'block';
+            sunIcon.style.display = 'none';
+        }
+    });
+
+    // Анимация счетчиков
+    const counters = document.querySelectorAll('.counter-number');
+    const statsSection = document.getElementById('stats');
+    let hasAnimated = false;
+
+    // Функция для плавной анимации числа
+    function animateCount(element, start = 0, target, duration = 2000) {
+        let startTime = null;
+
+        const step = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const percentage = Math.min(progress / duration, 1);
+            const value = Math.floor(start + percentage * (target - start));
+            element.textContent = value;
+            if (percentage < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                element.textContent = target; // Ensure it reaches the exact target
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Intersection Observer для запуска анимации
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                counters.forEach(counter => {
+                    const target = parseInt(counter.dataset.target, 10);
+                    animateCount(counter, 0, target, 1500);
+                });
+                hasAnimated = true;
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    if (statsSection) {
+        counterObserver.observe(statsSection);
+    }
+
+    // Chart.js для графика
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    
+    // Check for light/dark mode and set chart colors accordingly
+    const isLightMode = body.classList.contains('light-mode');
+    const primaryColor = 'rgb(128, 90, 213)'; /* Фиолетовый */
+    const secondaryColor = 'rgb(169, 169, 169)'; /* Серый */
+    const gridColor = 'rgba(255, 255, 255, 0.1)';
+    const textColor = isLightMode ? '#121212' : '#e0e0e0';
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['2021', '2022', '2023', '2024', '2025', '2026'],
+            datasets: [
+                {
+                    label: 'Завершенных проектов',
+                    data: [50, 150, 300, 500, 650, 1400],
+                    borderColor: primaryColor,
+                    backgroundColor: 'rgba(128, 90, 213, 0.2)',
+                    tension: 0.4,
+                    borderWidth: 5,
+                    pointRadius: 6,
+                    pointBackgroundColor: primaryColor,
+                    fill: true
+                }, 
+                {
+                    label: 'Довольные клиенты',
+                    data: [45, 140, 285, 480, 620, 900],
+                    borderColor: secondaryColor,
+                    backgroundColor: 'rgba(169, 169, 169, 0.2)',
+                    tension: 0.4,
+                    borderWidth: 5,
+                    pointRadius: 6,
+                    pointBackgroundColor: secondaryColor,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor,
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#FFFFFF',
+                    bodyColor: '#E0E0E0',
+                    padding: 10,
+                    displayColors: true
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#A9A9A9',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#A9A9A9',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
